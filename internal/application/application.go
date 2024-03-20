@@ -1,7 +1,6 @@
 package application
 
 import (
-	"log"
 	"log/slog"
 	"os"
 )
@@ -10,7 +9,7 @@ type Application struct {
 	Port    int
 	Env     string
 	Version string
-	Logger  *log.Logger
+	Logger  *slog.Logger
 }
 
 func New() *Application {

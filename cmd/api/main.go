@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log/slog"
 	"net/http"
 	"time"
 
@@ -22,5 +23,5 @@ func main() {
 	}
 
 	err := server.ListenAndServe()
-	app.Logger.Error(err)
+	app.Logger.Error("error while setting up server", slog.Any("error", err))
 }
