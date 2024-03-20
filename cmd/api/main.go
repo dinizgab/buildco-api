@@ -6,16 +6,16 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/dinizgab/buildco-api/internal/application"
+	"github.com/dinizgab/buildco-api/config"
 	"github.com/go-chi/chi/v5"
 )
 
 func main() {
-	app := application.New()
+	config := config.New()
 	router := chi.NewRouter()
 
 	server := http.Server{
-		Addr:         fmt.Sprintf(":%d", app.Port),
+		Addr:         fmt.Sprintf(":%d", config.Server.Port),
 		Handler:      router,
 		IdleTimeout:  time.Minute,
 		ReadTimeout:  10 * time.Second,
