@@ -1,16 +1,16 @@
 package router
 
 import (
+	"database/sql"
 	"log/slog"
 	"net/http"
 
 	company "github.com/dinizgab/buildco-api/internal/company/handler"
 	requestlog "github.com/dinizgab/buildco-api/internal/router/middleware/request_log"
 	"github.com/go-chi/chi/v5"
-	"github.com/jackc/pgx/v5"
 )
 
-func New(logger *slog.Logger, db *pgx.Conn) *chi.Mux {
+func New(logger *slog.Logger, db *sql.DB) *chi.Mux {
     router := chi.NewRouter()
 
     router.Route("/v1", func(r chi.Router) {
