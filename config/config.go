@@ -37,3 +37,12 @@ func New() *Config {
 
 	return &c
 }
+
+func NewDB() *DBConfig {
+    var dbc DBConfig
+    if err := envdecode.StrictDecode(&dbc); err != nil {
+        log.Fatalf("Failed to decode %s", err)
+    }
+
+    return &dbc
+}
