@@ -1,25 +1,24 @@
 package database
 
 import (
-	"context"
+	"database/sql"
 	"fmt"
 
 	"github.com/dinizgab/buildco-api/config"
-	"github.com/jackc/pgx/v5"
+	_ "github.com/jackc/pgx/v5"
 )
 
-func New(config config.DBConfig) (*pgx.Conn, error) {
-    ctx := context.Background()
+func New(config config.DBConfig) (*sql.DB, error) {
     dsn := fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=disable", config.UserName, config.Password, config.Host, config.Port, config.DBName)
 
-	db, err := pgx.Connect(context.Background(), dsn)
+	db, err := sql.Open("pgx", dsn)
 	if err != nil {
 		return nil, err
 	}
     
-    defer db.Close(ctx)
+    defer db.Close()
 
-	err = db.Ping(ctx)
+	err = db.Ping()
 	if err != nil {
 		return nil, err
 	}
