@@ -1,19 +1,18 @@
 package company
 
 import (
-	"github.com/jackc/pgx/v5"
+	"database/sql"
 )
 
 type CompanyRepository interface {
-
 }
 
 type companyRepositoryImpl struct {
-    DB *pgx.Conn
+	DB *sql.DB
 }
 
-func NewRepository(db *pgx.Conn) CompanyRepository {
-    return &companyRepositoryImpl{
-        DB: db,
-    }
+func NewRepository(db *sql.DB) CompanyRepository {
+	return &companyRepositoryImpl{
+		DB: db,
+	}
 }
