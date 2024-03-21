@@ -1,0 +1,27 @@
+services:
+  app:
+    build: .
+    env_file: .env
+    ports:
+      "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    command: [ "sh", "-c", "/myapp/bin/migrate up && /myapp/bin/api" ]
+    restart: always
+
+  db:
+    image: postgres:alpine
+    environment:
+        POSTGRES_DB: buildco_db
+        POSTGES_USER: buildco
+        POSTGRES_PASSWORD: buildco_pass
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U buildco -d buildco_db" ]
+      interval: 3s
+      timeout: 5s
+      retries: 5
+    restart: always
+
