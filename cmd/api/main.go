@@ -6,12 +6,14 @@ import (
 	"net/http"
 
 	"github.com/dinizgab/buildco-api/config"
-	"github.com/go-chi/chi/v5"
+	"github.com/dinizgab/buildco-api/internal/logger"
+	"github.com/dinizgab/buildco-api/internal/router"
 )
 
 func main() {
 	config := config.New()
-	router := chi.NewRouter()
+    logger := logger.New(config.Server.Debug)
+    router := router.New(logger)
 
 	server := http.Server{
 		Addr:         fmt.Sprintf(":%d", config.Server.Port),
@@ -20,7 +22,8 @@ func main() {
 		ReadTimeout:  config.Server.TimeoutRead,
 		WriteTimeout: config.Server.TimeoutWrite,
 	}
-
+    
+    logger.Info(fmt.Sprintf("Running server in port %d", config.Server.Port))
 	err := server.ListenAndServe()
-	appLogger.Error("error while setting up server", slog.Any("error", err))
+	logger.Error("error while setting up server", slog.Any("error", err))
 }
