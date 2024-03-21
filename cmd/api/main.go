@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/dinizgab/buildco-api/config"
+	"github.com/dinizgab/buildco-api/internal/database"
 	"github.com/dinizgab/buildco-api/internal/logger"
 	"github.com/dinizgab/buildco-api/internal/router"
 )
@@ -13,7 +14,12 @@ import (
 func main() {
 	config := config.New()
     logger := logger.New(config.Server.Debug)
-    router := router.New(logger)
+    db, err := database.New(config.DB)
+    if err != nil {
+        logger.Error("Error opening database connection", slog.Any("error", err))
+    }
+
+    router := router.New(logger, db)
 
 	server := http.Server{
 		Addr:         fmt.Sprintf(":%d", config.Server.Port),
@@ -24,6 +30,6 @@ func main() {
 	}
     
     logger.Info(fmt.Sprintf("Running server in port %d", config.Server.Port))
-	err := server.ListenAndServe()
+	err = server.ListenAndServe()
 	logger.Error("error while setting up server", slog.Any("error", err))
 }
