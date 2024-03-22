@@ -11,13 +11,13 @@ import (
 )
 
 func New(logger *slog.Logger, db *sql.DB) *chi.Mux {
-    router := chi.NewRouter()
+	router := chi.NewRouter()
 
-    router.Route("/v1", func(r chi.Router) {
-        
-        companyAPI := company.New(logger, db)
-        r.Method(http.MethodPost, "/company", requestlog.NewHandler(companyAPI.Create, logger))
-    })
-    
-    return router
+	router.Route("/v1", func(r chi.Router) {
+
+		companyAPI := company.New(logger, db)
+		r.Method(http.MethodPost, "/company", requestlog.NewHandler(companyAPI.Create, logger))
+	})
+
+	return router
 }

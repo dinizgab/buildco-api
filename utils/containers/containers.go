@@ -9,11 +9,11 @@ import (
 	"path/filepath"
 	"time"
 
+	_ "github.com/jackc/pgx/v5/stdlib"
 	"github.com/pressly/goose/v3"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/modules/postgres"
 	"github.com/testcontainers/testcontainers-go/wait"
-	_ "github.com/jackc/pgx/v5/stdlib"
 )
 
 type PostgresContainer struct {
@@ -50,7 +50,7 @@ func CreatePostgresContainer(ctx context.Context) (*PostgresContainer, error) {
 	if err != nil {
 		return nil, err
 	}
-    fmt.Println(migrationDirPath)
+	fmt.Println(migrationDirPath)
 	goose.UpContext(ctx, db, migrationDirPath)
 
 	return &PostgresContainer{

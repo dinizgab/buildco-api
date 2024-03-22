@@ -1,4 +1,4 @@
-package repository 
+package repository
 
 import (
 	"context"
@@ -36,21 +36,21 @@ func (suite *CompanyRepositoryTestSuite) TearDownSuite() {
 }
 
 func (suite *CompanyRepositoryTestSuite) TestCreateNewCompany() {
-    t := suite.T()
-    newCompany := company.Company{
-        Name: "Build Co. 1",
-        Email: "buildco1@gmail.com",
-        Phone: "837990-2345",
-    }
+	t := suite.T()
+	newCompany := company.Company{
+		Name:  "Build Co. 1",
+		Email: "buildco1@gmail.com",
+		Phone: "837990-2345",
+	}
 
-    result, err := suite.repository.Create(&newCompany)
-    assert.Nil(t, err)
-    assert.NotNil(t, result.ID)
-    assert.Equal(t, "Build Co. 1", result.Name)
-    assert.Equal(t, "buildco1@gmail.com", result.Email)
-    assert.Equal(t, "837990-2345", result.Phone)
+	result, err := suite.repository.Create(&newCompany)
+	assert.Nil(t, err)
+	assert.NotNil(t, result.ID)
+	assert.Equal(t, "Build Co. 1", result.Name)
+	assert.Equal(t, "buildco1@gmail.com", result.Email)
+	assert.Equal(t, "837990-2345", result.Phone)
 }
 
 func TestEventsRepository(t *testing.T) {
-    suite.Run(t, new(CompanyRepositoryTestSuite))
+	suite.Run(t, new(CompanyRepositoryTestSuite))
 }
