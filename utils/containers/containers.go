@@ -9,11 +9,11 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/dinizgab/buildco-api/config"
 	"github.com/pressly/goose/v3"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/modules/postgres"
 	"github.com/testcontainers/testcontainers-go/wait"
+	_ "github.com/jackc/pgx/v5/stdlib"
 )
 
 type PostgresContainer struct {
@@ -23,12 +23,11 @@ type PostgresContainer struct {
 
 func CreatePostgresContainer(ctx context.Context) (*PostgresContainer, error) {
 	containerImage := "postgres:latest"
-	testDB := config.NewDB()
 
 	pgContainer, err := postgres.RunContainer(ctx,
 		testcontainers.WithImage(containerImage),
-		postgres.WithDatabase(testDB.DBName),
-		postgres.WithPassword(testDB.Password),
+		postgres.WithDatabase("buildco-test"),
+		postgres.WithPassword("test-password"),
 		testcontainers.WithWaitStrategy(
 			wait.ForLog("database system is ready to accept connections").WithOccurrence(2).WithStartupTimeout(5*time.Second),
 		),
@@ -51,7 +50,7 @@ func CreatePostgresContainer(ctx context.Context) (*PostgresContainer, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer db.Close()
+    fmt.Println(migrationDirPath)
 	goose.UpContext(ctx, db, migrationDirPath)
 
 	return &PostgresContainer{
@@ -80,5 +79,5 @@ func searchMigrationDir() (string, error) {
 	}
 	migrationDir := filepath.Join(currentDir, "migrations")
 
-	return fmt.Sprintf("file:%s", migrationDir), nil
+	return migrationDir, nil
 }
