@@ -1,10 +1,10 @@
-package company
+package repository 
 
 import (
 	"database/sql"
     _ "embed"
 
-	company "github.com/dinizgab/buildco-api/internal/company/entity"
+	"github.com/dinizgab/buildco-api/internal/company/entity"
 )
 
 var (
@@ -13,7 +13,7 @@ var (
 )
 
 type CompanyRepository interface {
-    Create(*company.Company) (*company.Company, error)
+    Create(*entity.Company) (*entity.Company, error)
 }
 
 type companyRepositoryImpl struct {
@@ -26,7 +26,7 @@ func NewRepository(db *sql.DB) CompanyRepository {
 	}
 }
 
-func (repo *companyRepositoryImpl) Create(company *company.Company) (*company.Company, error) {
+func (repo *companyRepositoryImpl) Create(company *entity.Company) (*entity.Company, error) {
     args := []interface{}{company.Name, company.Email, company.Phone}
      
     err := repo.DB.QueryRow(queryCreateNewCompany, args...).Scan(&company.ID, &company.Name, &company.Email, &company.Phone)

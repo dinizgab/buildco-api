@@ -1,4 +1,4 @@
-package company
+package repository 
 
 import (
 	"context"

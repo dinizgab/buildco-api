@@ -1,22 +1,22 @@
-package company
+package handler 
 
 import (
 	"database/sql"
 	"log/slog"
 	"net/http"
 
-	company "github.com/dinizgab/buildco-api/internal/company/usecase"
+	"github.com/dinizgab/buildco-api/internal/company/usecase"
 )
 
 type API struct {
 	logger  *slog.Logger
-	usecase company.CompanyUseCase
+	usecase usecase.CompanyUseCase
 }
 
 func New(logger *slog.Logger, db *sql.DB) *API {
 	return &API{
 		logger:  logger,
-		usecase: company.NewUsecase(db),
+		usecase: usecase.NewUsecase(db),
 	}
 }
 
