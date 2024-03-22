@@ -39,10 +39,10 @@ func New() *Config {
 }
 
 func NewDB() *DBConfig {
-    var dbc DBConfig
-    if err := envdecode.StrictDecode(&dbc); err != nil {
-        log.Fatalf("Failed to decode %s", err)
-    }
+	var dbc DBConfig
+	if err := envdecode.StrictDecode(&dbc); err != nil {
+		log.Fatalf("Failed to decode %s", err)
+	}
 
-    return &dbc
+	return &dbc
 }

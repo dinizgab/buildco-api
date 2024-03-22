@@ -61,7 +61,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	le.ResponseHeaderSize, le.ResponseBodySize = w2.size()
 	h.logger.Info(
-        "",
+		"",
 		"request_id", le.RequestID,
 		"received_time", le.ReceivedTime,
 		"method", le.RequestMethod,
@@ -77,5 +77,5 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		"resp_header_size", le.ResponseHeaderSize,
 		"resp_body_size", le.ResponseBodySize,
 		"latency", le.Latency,
-    )
+	)
 }
