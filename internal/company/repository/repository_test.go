@@ -5,7 +5,7 @@ import (
 	"log"
 	"testing"
 
-	company "github.com/dinizgab/buildco-api/internal/company/entity"
+	"github.com/dinizgab/buildco-api/internal/company/entity"
 	"github.com/dinizgab/buildco-api/utils/containers"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
@@ -37,13 +37,13 @@ func (suite *CompanyRepositoryTestSuite) TearDownSuite() {
 
 func (suite *CompanyRepositoryTestSuite) TestCreateNewCompany() {
 	t := suite.T()
-	newCompany := company.Company{
+	newCompany := &entity.Company{
 		Name:  "Build Co. 1",
 		Email: "buildco1@gmail.com",
 		Phone: "837990-2345",
 	}
 
-	result, err := suite.repository.Create(&newCompany)
+	result, err := suite.repository.Create(newCompany)
 	assert.Nil(t, err)
 	assert.NotNil(t, result.ID)
 	assert.Equal(t, "Build Co. 1", result.Name)
