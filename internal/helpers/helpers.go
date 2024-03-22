@@ -1,18 +1,13 @@
-package helpers 
+package helpers
 
 import "net/http"
 
-var (
-    InternalServerErrorMessage = "An unexpected error happened, try again!"
-    BadRequestErrorMessage = "Please insert a valid value"
-)
-
-func ServerError(w http.ResponseWriter, response []byte) {
-    w.WriteHeader(http.StatusInternalServerError)
-    w.Write(response)
+func ServerError(w http.ResponseWriter) {
+	w.WriteHeader(http.StatusInternalServerError)
+	w.Write([]byte("An unexpected error happened, try again!"))
 }
 
-func BadRequest(w http.ResponseWriter, response []byte) {
-    w.WriteHeader(http.StatusBadRequest)
-    w.Write(response)
+func BadRequest(w http.ResponseWriter) {
+	w.WriteHeader(http.StatusBadRequest)
+	w.Write([]byte("Please insert a valid value!"))
 }
