@@ -18,7 +18,7 @@ import (
 
 type PostgresContainer struct {
 	*postgres.PostgresContainer
-	DBConn *sql.DB 
+	DBConn *sql.DB
 }
 
 func CreatePostgresContainer(ctx context.Context) (*PostgresContainer, error) {
@@ -51,14 +51,12 @@ func CreatePostgresContainer(ctx context.Context) (*PostgresContainer, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	defer db.Close()
-
 	goose.UpContext(ctx, db, migrationDirPath)
 
 	return &PostgresContainer{
 		PostgresContainer: pgContainer,
-		DBConn:  db,
+		DBConn:            db,
 	}, nil
 }
 
