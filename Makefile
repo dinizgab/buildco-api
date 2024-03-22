@@ -10,5 +10,8 @@ build:
 test:
 	go test -v ./...
 
+format:
+	gofmt -s -w .
+
 migrate:
 	goose up
