@@ -1,8 +1,6 @@
 package usecase
 
 import (
-	"database/sql"
-
 	"github.com/dinizgab/buildco-api/internal/company/entity"
 	"github.com/dinizgab/buildco-api/internal/company/repository"
 )
@@ -15,12 +13,17 @@ type companyUseCaseImpl struct {
 	repo repository.CompanyRepository
 }
 
-func NewUsecase(db *sql.DB) CompanyUseCase {
+func NewUsecase(repo repository.CompanyRepository) CompanyUseCase {
 	return &companyUseCaseImpl{
-		repo: repository.NewRepository(db),
+		repo: repo, 
 	}
 }
 
 func (uc *companyUseCaseImpl) Create(company *entity.Company) (*entity.Company, error) {
-	return nil, nil
+    newCompany, err := uc.repo.Create(company)
+    if err != nil {
+        return nil, err
+    } 
+
+	return newCompany, nil
 }
