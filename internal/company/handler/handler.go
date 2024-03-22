@@ -5,6 +5,7 @@ import (
 	"log/slog"
 	"net/http"
 
+	"github.com/dinizgab/buildco-api/internal/company/repository"
 	"github.com/dinizgab/buildco-api/internal/company/usecase"
 )
 
@@ -14,9 +15,11 @@ type API struct {
 }
 
 func New(logger *slog.Logger, db *sql.DB) *API {
+    repo := repository.NewRepository(db)
+
 	return &API{
 		logger:  logger,
-		usecase: usecase.NewUsecase(db),
+		usecase: usecase.NewUsecase(repo),
 	}
 }
 
