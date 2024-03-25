@@ -49,7 +49,10 @@ func CreatePostgresContainer(ctx context.Context) (*PostgresContainer, error) {
 	if err != nil {
 		return nil, err
 	}
-	goose.UpContext(ctx, db, migrationDirPath)
+	err = goose.UpContext(ctx, db, migrationDirPath)
+	if err != nil {
+		return nil, err
+	}
 
 	return &PostgresContainer{
 		PostgresContainer: pgContainer,
