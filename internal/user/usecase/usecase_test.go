@@ -54,6 +54,64 @@ func (suite *UsersUseCaseTestSuite) TestCreateNewUser() {
 	assert.Equal(t, "gabriel@gmail.com", newUser.Email)
 }
 
+func (suite *UsersUseCaseTestSuite) TestCreateNewUserEmptyName() {
+	t := suite.T()
+	user := &entity.User{
+		Name: "",
+	}
+
+	newUser, err := suite.usecase.Create(user)
+
+	assert.Nil(t, newUser)
+	assert.NotNil(t, err)
+	assert.Equal(t, "User's name must not be empty!", err.Error())
+}
+
+func (suite *UsersUseCaseTestSuite) TestCreateNewUserEmptyUserName() {
+	t := suite.T()
+	user := &entity.User{
+		Name:     "Gabriel",
+		UserName: "",
+	}
+
+	newUser, err := suite.usecase.Create(user)
+
+	assert.Nil(t, newUser)
+	assert.NotNil(t, err)
+	assert.Equal(t, "User's username must not be empty!", err.Error())
+}
+
+func (suite *UsersUseCaseTestSuite) TestCreateNewUserEmptyEmail() {
+	t := suite.T()
+	user := &entity.User{
+		Name:     "Gabriel",
+		UserName: "dinizgab",
+		Email:    "",
+	}
+
+	newUser, err := suite.usecase.Create(user)
+
+	assert.Nil(t, newUser)
+	assert.NotNil(t, err)
+	assert.Equal(t, "User's email must not be empty!", err.Error())
+}
+
+func (suite *UsersUseCaseTestSuite) TestCreateNewUserEmptyPassword() {
+	t := suite.T()
+	user := &entity.User{
+		Name:     "Gabriel",
+		UserName: "dinizgab",
+		Email:    "gabriel@gmail.com",
+		Password: "",
+	}
+
+	newUser, err := suite.usecase.Create(user)
+
+	assert.Nil(t, newUser)
+	assert.NotNil(t, err)
+	assert.Equal(t, "User's password must not be empty!", err.Error())
+}
+
 func TestUsersUseCase(t *testing.T) {
 	suite.Run(t, new(UsersUseCaseTestSuite))
 }
