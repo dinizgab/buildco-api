@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"fmt"
 	"os"
 	"path/filepath"
 	"time"
@@ -49,7 +50,8 @@ func CreatePostgresContainer(ctx context.Context) (*PostgresContainer, error) {
 	if err != nil {
 		return nil, err
 	}
-	err = goose.UpContext(ctx, db, migrationDirPath)
+  
+  err = goose.UpContext(ctx, db, migrationDirPath)
 	if err != nil {
 		return nil, err
 	}
