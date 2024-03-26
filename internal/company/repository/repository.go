@@ -10,10 +10,13 @@ import (
 var (
 	//go:embed sql/create_new_company.sql
 	queryCreateNewCompany string
+    //go:embed sql/find_company_by_id.sql
+    queryFindById string
 )
 
 type CompanyRepository interface {
 	Create(*entity.Company) (*entity.Company, error)
+    FindById(id string) (*entity.Company, error)
 }
 
 type companyRepositoryImpl struct {
@@ -35,4 +38,17 @@ func (repo *companyRepositoryImpl) Create(company *entity.Company) (*entity.Comp
 	}
 
 	return company, nil
+}
+
+func (repo *companyRepositoryImpl) FindById(id string) (*entity.Company, error) {
+    company := new(entity.Company)
+
+    err := repo.DB.QueryRow(queryFindById, id).Scan(&company.ID, &company.Name, &company.Email, &company.Phone, &company.CreatedAt)
+    if err != nil {
+        return nil, err
+    }
+
+    // TODO - Get company ratings
+
+    return company, nil
 }

@@ -20,6 +20,10 @@ func (repo *CompanyRepositoryMock) Create(company *entity.Company) (*entity.Comp
 	return args.Get(0).(*entity.Company), nil
 }
 
+func (repo *CompanyRepositoryMock) FindById(id string) (*entity.Company, error) {
+    return nil, nil
+}
+
 type CompanyUsecaseTestSuite struct {
 	suite.Suite
 	usecase CompanyUseCase
