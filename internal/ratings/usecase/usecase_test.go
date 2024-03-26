@@ -95,47 +95,47 @@ func (suite *RatingsUseCaseTestSuite) TestCreateRatingSmallestGrade() {
 }
 
 func (suite *RatingsUseCaseTestSuite) TestCreateRatingEqualsZero() {
-    t := suite.T()
+	t := suite.T()
 	companyId := uuid.NewString()
-    newRating := &rating.Rating{
-        Grade: 0,
-        Comment: "test",
-    }
-    
-    newRating, err := suite.usecase.Create(companyId, newRating)
+	newRating := &rating.Rating{
+		Grade:   0,
+		Comment: "test",
+	}
 
-    assert.Nil(t, newRating)
-    assert.NotNil(t, err)
-    assert.Equal(t, "Invalid grade value: 0", err.Error())
+	newRating, err := suite.usecase.Create(companyId, newRating)
+
+	assert.Nil(t, newRating)
+	assert.NotNil(t, err)
+	assert.Equal(t, "Invalid grade value: 0", err.Error())
 }
 
 func (suite *RatingsUseCaseTestSuite) TestCreateRatingAboveMax() {
-    t := suite.T()
+	t := suite.T()
 	companyId := uuid.NewString()
-    newRating := &rating.Rating{
-        Grade: 6,
-        Comment: "test",
-    }
-    
-    newRating, err := suite.usecase.Create(companyId, newRating)
+	newRating := &rating.Rating{
+		Grade:   6,
+		Comment: "test",
+	}
 
-    assert.Nil(t, newRating)
-    assert.NotNil(t, err)
-    assert.Equal(t, "Invalid grade value: 6", err.Error())
+	newRating, err := suite.usecase.Create(companyId, newRating)
+
+	assert.Nil(t, newRating)
+	assert.NotNil(t, err)
+	assert.Equal(t, "Invalid grade value: 6", err.Error())
 }
 
 func (suite *RatingsUseCaseTestSuite) TestCreateRatingEmptyComment() {
-    t := suite.T()
+	t := suite.T()
 	companyId := uuid.NewString()
-    newRating := &rating.Rating{
-        Grade: 4,
-    }
-    
-    newRating, err := suite.usecase.Create(companyId, newRating)
+	newRating := &rating.Rating{
+		Grade: 4,
+	}
 
-    assert.Nil(t, newRating)
-    assert.NotNil(t, err)
-    assert.Equal(t, "Comment must not be empty!", err.Error())
+	newRating, err := suite.usecase.Create(companyId, newRating)
+
+	assert.Nil(t, newRating)
+	assert.NotNil(t, err)
+	assert.Equal(t, "Comment must not be empty!", err.Error())
 }
 
 func TestRatingsUseCase(t *testing.T) {

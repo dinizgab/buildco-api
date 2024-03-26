@@ -18,7 +18,7 @@ func main() {
 	if err != nil {
 		logger.Error("Error opening database connection", slog.Any("error", err))
 
-        return
+		return
 	}
 
 	router := router.New(logger, db)

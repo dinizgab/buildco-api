@@ -6,8 +6,8 @@ import (
 )
 
 type Rating struct {
-    ID uuid.UUID
-    Grade int
-    Comment string
-    Company *entity.Company
+	ID      uuid.UUID
+	Grade   int
+	Comment string
+	Company *entity.Company
 }

@@ -15,15 +15,15 @@ type companyUseCaseImpl struct {
 
 func NewUsecase(repo repository.CompanyRepository) CompanyUseCase {
 	return &companyUseCaseImpl{
-		repo: repo, 
+		repo: repo,
 	}
 }
 
 func (uc *companyUseCaseImpl) Create(company *entity.Company) (*entity.Company, error) {
-    newCompany, err := uc.repo.Create(company)
-    if err != nil {
-        return nil, err
-    } 
+	newCompany, err := uc.repo.Create(company)
+	if err != nil {
+		return nil, err
+	}
 
 	return newCompany, nil
 }

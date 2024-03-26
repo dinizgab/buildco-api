@@ -18,7 +18,7 @@ type API struct {
 }
 
 func New(logger *slog.Logger, db *sql.DB) *API {
-    repo := repository.NewRepository(db)
+	repo := repository.NewRepository(db)
 
 	return &API{
 		logger:  logger,
@@ -27,29 +27,29 @@ func New(logger *slog.Logger, db *sql.DB) *API {
 }
 
 func (api *API) Create(w http.ResponseWriter, r *http.Request) {
-    var company *entity.Company
+	var company *entity.Company
 
-    err := json.NewDecoder(r.Body).Decode(&company)
-    if err != nil {
-        api.logger.Error("Something went wrong:", slog.Any("error", err))
-        helpers.ServerError(w)
+	err := json.NewDecoder(r.Body).Decode(&company)
+	if err != nil {
+		api.logger.Error("Something went wrong:", slog.Any("error", err))
+		helpers.ServerError(w)
 
-        return
-    }
+		return
+	}
 
-    createdCompany, err := api.usecase.Create(company)
-    if err != nil {
-        api.logger.Error("Something went wrong:", slog.Any("error", err))
-        helpers.ServerError(w)
+	createdCompany, err := api.usecase.Create(company)
+	if err != nil {
+		api.logger.Error("Something went wrong:", slog.Any("error", err))
+		helpers.ServerError(w)
 
-        return
-    }
+		return
+	}
 
-    err = json.NewEncoder(w).Encode(createdCompany)
-    if err != nil {
-        api.logger.Error("Something went wrong:", slog.Any("error", err))
-        helpers.ServerError(w)
+	err = json.NewEncoder(w).Encode(createdCompany)
+	if err != nil {
+		api.logger.Error("Something went wrong:", slog.Any("error", err))
+		helpers.ServerError(w)
 
-        return
-    }
+		return
+	}
 }

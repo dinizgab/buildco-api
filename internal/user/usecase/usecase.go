@@ -38,12 +38,12 @@ func (uc *usersUsecaseImpl) Create(user *entity.User) (*entity.User, error) {
 	if len(user.Password) == 0 {
 		return nil, errors.New("User's password must not be empty!")
 	}
-    
-    hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), 14)
-    if err != nil {
-        return nil, err
-    }
-    user.Password = string(hashedPassword)
+
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), 14)
+	if err != nil {
+		return nil, err
+	}
+	user.Password = string(hashedPassword)
 
 	newUser, err := uc.repo.Create(user)
 	if err != nil {
