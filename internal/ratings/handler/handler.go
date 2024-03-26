@@ -28,7 +28,7 @@ func New(logger *slog.Logger, db *sql.DB) *API {
 }
 
 func (api *API) Create(w http.ResponseWriter, r *http.Request) {
-    companyId := chi.URLParam(r, "id")
+	companyId := chi.URLParam(r, "id")
 	var rating *entity.Rating
 
 	err := json.NewDecoder(r.Body).Decode(&rating)
@@ -39,7 +39,7 @@ func (api *API) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-    newRating, err := api.usecase.Create(companyId, rating)
+	newRating, err := api.usecase.Create(companyId, rating)
 	if err != nil {
 		api.logger.Error("Something went wrong!", slog.Any("error", err))
 		helpers.ServerError(w)

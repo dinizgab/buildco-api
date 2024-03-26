@@ -41,20 +41,20 @@ func (suite *CompanyUsecaseTestSuite) TestCreateCompany() {
 		Email: "buildco1@gmail.com",
 		Phone: "837990-2345",
 	}
-    newId :=  uuid.New()
+	newId := uuid.New()
 
-    expected := &entity.Company{ID: newId, Name: "Culto 1", Email: "buildco1@gmail.com", Phone: "837990-2345"} 
+	expected := &entity.Company{ID: newId, Name: "Culto 1", Email: "buildco1@gmail.com", Phone: "837990-2345"}
 	suite.repo.Mock.On("Create", newCompany).Return(expected)
 
-    result, err := suite.usecase.Create(newCompany)
-   
-    assert.Nil(t, err)
-    assert.Equal(t, newId, result.ID)
-    assert.Equal(t, expected.Name, result.Name)
-    assert.Equal(t, expected.Email, result.Email)
-    assert.Equal(t, expected.Phone, result.Phone)
+	result, err := suite.usecase.Create(newCompany)
+
+	assert.Nil(t, err)
+	assert.Equal(t, newId, result.ID)
+	assert.Equal(t, expected.Name, result.Name)
+	assert.Equal(t, expected.Email, result.Email)
+	assert.Equal(t, expected.Phone, result.Phone)
 }
 
 func TestCompanyUseCase(t *testing.T) {
-    suite.Run(t, new(CompanyUsecaseTestSuite))
+	suite.Run(t, new(CompanyUsecaseTestSuite))
 }
