@@ -11,13 +11,13 @@ import (
 var (
 	//go:embed sql/create_new_company.sql
 	queryCreateNewCompany string
-    //go:embed sql/find_company_by_id.sql
-    queryFindById string
+	//go:embed sql/find_company_by_id.sql
+	queryFindById string
 )
 
 type CompanyRepository interface {
 	Create(*company.Company) (*company.Company, error)
-    FindById(id string) (*company.Company, error)
+	FindById(id string) (*company.Company, error)
 }
 
 type companyRepositoryImpl struct {
@@ -42,39 +42,39 @@ func (repo *companyRepositoryImpl) Create(company *company.Company) (*company.Co
 }
 
 func (repo *companyRepositoryImpl) FindById(id string) (*company.Company, error) {
-    company := &company.Company{}
+	company := &company.Company{}
 
-    rows, err := repo.DB.Query(queryFindById, id)
-    if err != nil {
-        return nil, err
-    }
+	rows, err := repo.DB.Query(queryFindById, id)
+	if err != nil {
+		return nil, err
+	}
 
-    for rows.Next() {
-        var grade sql.NullInt16
-        var comment sql.NullString
+	for rows.Next() {
+		var grade sql.NullInt16
+		var comment sql.NullString
 
-        err = rows.Scan(
-            &company.ID,
-            &company.Name,
-            &company.Email,
-            &company.Phone,
-            &company.CreatedAt,
-            &grade,
-            &comment,
-        )
-        if err != nil {
-            return nil, err
-        }
+		err = rows.Scan(
+			&company.ID,
+			&company.Name,
+			&company.Email,
+			&company.Phone,
+			&company.CreatedAt,
+			&grade,
+			&comment,
+		)
+		if err != nil {
+			return nil, err
+		}
 
-        if grade.Valid && comment.Valid {
-            rating := &rating.Rating{
-                Grade: int(grade.Int16),
-                Comment: comment.String,
-            }
+		if grade.Valid && comment.Valid {
+			rating := &rating.Rating{
+				Grade:   int(grade.Int16),
+				Comment: comment.String,
+			}
 
-            company.Ratings = append(company.Ratings, rating)
-        }
-    }
+			company.Ratings = append(company.Ratings, rating)
+		}
+	}
 
-    return company, nil
+	return company, nil
 }

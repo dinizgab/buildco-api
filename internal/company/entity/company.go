@@ -8,10 +8,10 @@ import (
 )
 
 type Company struct {
-	ID    uuid.UUID
-	Name  string
-	Email string
-	Phone string
-    Ratings []*entity.Rating
-    CreatedAt time.Time
+	ID        uuid.UUID
+	Name      string
+	Email     string
+	Phone     string
+	Ratings   []*entity.Rating
+	CreatedAt time.Time
 }

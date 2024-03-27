@@ -21,7 +21,7 @@ func (repo *CompanyRepositoryMock) Create(company *entity.Company) (*entity.Comp
 }
 
 func (repo *CompanyRepositoryMock) FindById(id string) (*entity.Company, error) {
-    return nil, nil
+	return nil, nil
 }
 
 type CompanyUsecaseTestSuite struct {
