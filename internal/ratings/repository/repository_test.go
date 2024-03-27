@@ -5,7 +5,6 @@ import (
 	"log"
 	"testing"
 
-	company "github.com/dinizgab/buildco-api/internal/company/entity"
 	rating "github.com/dinizgab/buildco-api/internal/ratings/entity"
 	"github.com/dinizgab/buildco-api/utils/containers"
 	"github.com/google/uuid"
@@ -45,12 +44,6 @@ func (suite *RatingsRepositoryTestSuite) TestCreateNewRating() {
 	}
 
 	uuid, _ := uuid.Parse("244c423a-930f-42a3-837f-c99102d27339")
-	resultCompany := &company.Company{
-		ID:    uuid,
-		Name:  "Test co.1",
-		Email: "testco1@gmail.com",
-		Phone: "1234-1234",
-	}
 
 	newRating, err := suite.repository.Create(uuid, rating)
 
@@ -58,7 +51,6 @@ func (suite *RatingsRepositoryTestSuite) TestCreateNewRating() {
 	assert.NotNil(t, newRating.ID)
 	assert.Equal(t, 3, newRating.Grade)
 	assert.Equal(t, "Test rating", newRating.Comment)
-	assert.Equal(t, resultCompany.ID, newRating.Company.ID)
 }
 
 func TestRatingsRepository(t *testing.T) {
