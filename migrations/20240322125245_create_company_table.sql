@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS company (
 );
 
 INSERT INTO company (id, name, phone, email)
-VALUES ('244c423a-930f-42a3-837f-c99102d27339', 'Test co.1', 'testco1@gmail.com', '1234-1234')
+VALUES ('244c423a-930f-42a3-837f-c99102d27339', 'Test co.1', 'testco1@gmail.com', '1234-1234');
 -- +goose StatementEnd
 
 -- +goose Down
