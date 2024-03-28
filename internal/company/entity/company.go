@@ -8,10 +8,10 @@ import (
 )
 
 type Company struct {
-	ID        uuid.UUID
-	Name      string
-	Email     string
-	Phone     string
-	Ratings   []*entity.Rating
-	CreatedAt time.Time
+	ID        uuid.UUID        `json:"id"`
+	Name      string           `json:"name"`
+	Email     string           `json:"email"`
+	Phone     string           `json:"phone_number"`
+	Ratings   []*entity.Rating `json:"ratings"`
+	CreatedAt time.Time        `json:"created_at"`
 }
