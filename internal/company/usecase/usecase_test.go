@@ -20,6 +20,12 @@ func (repo *CompanyRepositoryMock) Create(company *entity.Company) (*entity.Comp
 	return args.Get(0).(*entity.Company), nil
 }
 
+func (repo *CompanyRepositoryMock) FindAll() ([]*entity.Company, error) {
+    args := repo.Called()
+
+	return args.Get(0).([]*entity.Company), nil
+}
+
 func (repo *CompanyRepositoryMock) FindById(id string) (*entity.Company, error) {
 	args := repo.Called(id)
 
@@ -59,6 +65,18 @@ func (suite *CompanyUsecaseTestSuite) TestCreateCompany() {
 	assert.Equal(t, expected.Name, result.Name)
 	assert.Equal(t, expected.Email, result.Email)
 	assert.Equal(t, expected.Phone, result.Phone)
+}
+
+func (suite *CompanyUsecaseTestSuite) TestFindAll() {
+	t := suite.T()
+
+	expected := []*entity.Company{{Name: "Co2"}, {Name: "Co1"}}
+	suite.repo.Mock.On("FindAll").Return(expected)
+
+	result, err := suite.usecase.FindAll()
+
+	assert.Nil(t, err)
+	assert.Equal(t, 2, len(result))
 }
 
 func (suite *CompanyUsecaseTestSuite) TestFindById() {

@@ -11,12 +11,15 @@ import (
 var (
 	//go:embed sql/create_new_company.sql
 	queryCreateNewCompany string
+	//go:embed sql/find_all_companies.sql
+	queryFindAll string
 	//go:embed sql/find_company_by_id.sql
 	queryFindById string
 )
 
 type CompanyRepository interface {
 	Create(*company.Company) (*company.Company, error)
+	FindAll() ([]*company.Company, error)
 	FindById(id string) (*company.Company, error)
 }
 
@@ -39,6 +42,28 @@ func (repo *companyRepositoryImpl) Create(company *company.Company) (*company.Co
 	}
 
 	return company, nil
+}
+
+func (repo *companyRepositoryImpl) FindAll() ([]*company.Company, error) {
+	companies := []*company.Company{}
+
+	rows, err := repo.DB.Query(queryFindAll)
+	if err != nil {
+		return nil, err
+	}
+
+	for rows.Next() {
+		company := &company.Company{}
+
+		err = rows.Scan(&company.ID, &company.Name, &company.Phone, &company.Email)
+		if err != nil {
+			return nil, err
+		}
+
+		companies = append(companies, company)
+	}
+
+	return companies, nil
 }
 
 func (repo *companyRepositoryImpl) FindById(id string) (*company.Company, error) {
