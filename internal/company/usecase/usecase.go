@@ -7,6 +7,7 @@ import (
 
 type CompanyUseCase interface {
 	Create(*entity.Company) (*entity.Company, error)
+    FindById(string) (*entity.Company, error)
 }
 
 type companyUseCaseImpl struct {
@@ -26,4 +27,13 @@ func (uc *companyUseCaseImpl) Create(company *entity.Company) (*entity.Company, 
 	}
 
 	return newCompany, nil
+}
+
+func (uc *companyUseCaseImpl) FindById(id string) (*entity.Company, error) {
+    resultCompany, err := uc.repo.FindById(id)
+    if err != nil {
+        return nil, err
+    }
+
+    return resultCompany, nil
 }

@@ -51,15 +51,28 @@ func (suite *CompanyRepositoryTestSuite) TestCreateNewCompany() {
 	assert.Equal(t, "837990-2345", result.Phone)
 }
 
-func (suite *CompanyRepositoryTestSuite) TestFindCompanyById() {
+func (suite *CompanyRepositoryTestSuite) TestFindByIdNoRatings() {
 	t := suite.T()
-	companyId := "244c423a-930f-42a3-837f-c99102d27339"
+	companyId := "8db46e78-bf5b-46fb-8768-7e1fc457e5a7"
 
 	result, err := suite.repository.FindById(companyId)
 	assert.Nil(t, err)
 	assert.Equal(t, "Test co.1", result.Name)
 	assert.Equal(t, "testco1@gmail.com", result.Email)
 	assert.Equal(t, "1234-1234", result.Phone)
+    assert.Equal(t, 0, len(result.Ratings))
+}
+
+func (suite *CompanyRepositoryTestSuite) TestFindByIdWithRatings() {
+	t := suite.T()
+    companyId := "124f7323-ee68-4eb6-9509-84eb966cc5cf"
+
+	result, err := suite.repository.FindById(companyId)
+	assert.Nil(t, err)
+	assert.Equal(t, "Test co.2", result.Name)
+	assert.Equal(t, "testco2@gmail.com", result.Email)
+	assert.Equal(t, "4321-4321", result.Phone)
+    assert.Equal(t, 3, len(result.Ratings))
 }
 
 func TestEventsRepository(t *testing.T) {

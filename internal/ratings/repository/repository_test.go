@@ -43,7 +43,7 @@ func (suite *RatingsRepositoryTestSuite) TestCreateNewRating() {
 		Comment: "Test rating",
 	}
 
-	uuid, _ := uuid.Parse("244c423a-930f-42a3-837f-c99102d27339")
+	uuid, _ := uuid.Parse("124f7323-ee68-4eb6-9509-84eb966cc5cf")
 
 	newRating, err := suite.repository.Create(uuid, rating)
 

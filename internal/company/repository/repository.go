@@ -56,8 +56,8 @@ func (repo *companyRepositoryImpl) FindById(id string) (*company.Company, error)
 		err = rows.Scan(
 			&company.ID,
 			&company.Name,
-			&company.Email,
 			&company.Phone,
+			&company.Email,
 			&company.CreatedAt,
 			&grade,
 			&comment,

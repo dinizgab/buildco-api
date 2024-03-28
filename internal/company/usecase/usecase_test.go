@@ -21,7 +21,9 @@ func (repo *CompanyRepositoryMock) Create(company *entity.Company) (*entity.Comp
 }
 
 func (repo *CompanyRepositoryMock) FindById(id string) (*entity.Company, error) {
-	return nil, nil
+	args := repo.Called(id)
+
+	return args.Get(0).(*entity.Company), nil
 }
 
 type CompanyUsecaseTestSuite struct {
@@ -57,6 +59,21 @@ func (suite *CompanyUsecaseTestSuite) TestCreateCompany() {
 	assert.Equal(t, expected.Name, result.Name)
 	assert.Equal(t, expected.Email, result.Email)
 	assert.Equal(t, expected.Phone, result.Phone)
+}
+
+func (suite *CompanyUsecaseTestSuite) TestFindById() {
+	t := suite.T()
+	companyId := "8db46e78-bf5b-46fb-8768-7e1fc457e5a7"
+	parsedCompanyId, _ := uuid.Parse(companyId)
+
+	expected := &entity.Company{ID: parsedCompanyId, Name: "Buildco 1", Email: "buildco1@gmail.com", Phone: "1234-1234"}
+	suite.repo.Mock.On("FindById", companyId).Return(expected)
+
+	result, err := suite.usecase.FindById(companyId)
+
+	assert.Nil(t, err)
+	assert.Equal(t, parsedCompanyId, result.ID)
+	assert.Equal(t, "Buildco 1", result.Name)
 }
 
 func TestCompanyUseCase(t *testing.T) {
