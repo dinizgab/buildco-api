@@ -21,7 +21,7 @@ func (repo *CompanyRepositoryMock) Create(company *entity.Company) (*entity.Comp
 }
 
 func (repo *CompanyRepositoryMock) FindAll() ([]*entity.Company, error) {
-    args := repo.Called()
+	args := repo.Called()
 
 	return args.Get(0).([]*entity.Company), nil
 }

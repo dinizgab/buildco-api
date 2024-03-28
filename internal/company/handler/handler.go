@@ -64,13 +64,13 @@ func (api *API) FindAll(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-    err = json.NewEncoder(w).Encode(companies)
-    if err != nil {
+	err = json.NewEncoder(w).Encode(companies)
+	if err != nil {
 		api.logger.Error("Something went wrong:", slog.Any("error", err))
 		helpers.ServerError(w)
 
 		return
-    }
+	}
 }
 
 func (api *API) FindById(w http.ResponseWriter, r *http.Request) {
