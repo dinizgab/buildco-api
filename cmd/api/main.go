@@ -20,6 +20,7 @@ func main() {
 
 		return
 	}
+	defer db.Close()
 
 	router := router.New(logger, db)
 

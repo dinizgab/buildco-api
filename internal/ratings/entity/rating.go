@@ -5,7 +5,7 @@ import (
 )
 
 type Rating struct {
-	ID      uuid.UUID
-	Grade   int
-	Comment string
+	ID      uuid.UUID `json:"id"`
+	Grade   int       `json:"grade"`
+	Comment string    `json:"comment"`
 }
