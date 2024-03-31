@@ -55,7 +55,7 @@ func (repo *companyRepositoryImpl) FindAll() ([]*company.Company, error) {
 	for rows.Next() {
 		company := &company.Company{}
 
-		err = rows.Scan(&company.ID, &company.Name, &company.Phone, &company.Email)
+		err = rows.Scan(&company.ID, &company.Name, &company.Email, &company.Phone)
 		if err != nil {
 			return nil, err
 		}
@@ -96,7 +96,6 @@ func (repo *companyRepositoryImpl) FindById(id string) (*company.Company, error)
 				Grade:   int(grade.Int16),
 				Comment: comment.String,
 			}
-
 			company.Ratings = append(company.Ratings, rating)
 		}
 	}
