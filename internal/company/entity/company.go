@@ -11,7 +11,7 @@ type Company struct {
 	ID        uuid.UUID        `json:"id"`
 	Name      string           `json:"name"`
 	Email     string           `json:"email"`
-	Phone     string           `json:"phone_number"`
+	Phone     string           `json:"phone"`
 	Ratings   []*entity.Rating `json:"ratings"`
-	CreatedAt time.Time        `json:"created_at"`
+	CreatedAt time.Time        `json:"createdAt"`
 }
