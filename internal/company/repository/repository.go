@@ -6,6 +6,7 @@ import (
 
 	company "github.com/dinizgab/buildco-api/internal/company/entity"
 	rating "github.com/dinizgab/buildco-api/internal/ratings/entity"
+	"github.com/google/uuid"
 )
 
 var (
@@ -67,7 +68,7 @@ func (repo *companyRepositoryImpl) FindAll() ([]*company.Company, error) {
 }
 
 func (repo *companyRepositoryImpl) FindById(id string) (*company.Company, error) {
-	company := &company.Company{}
+	company := &company.Company{Ratings: make([]*rating.Rating, 0)}
 
 	rows, err := repo.DB.Query(queryFindById, id)
 	if err != nil {
@@ -75,8 +76,10 @@ func (repo *companyRepositoryImpl) FindById(id string) (*company.Company, error)
 	}
 
 	for rows.Next() {
+		var ratingId sql.NullString
 		var grade sql.NullInt16
 		var comment sql.NullString
+		var ratingCreatedAt sql.NullTime
 
 		err = rows.Scan(
 			&company.ID,
@@ -84,17 +87,26 @@ func (repo *companyRepositoryImpl) FindById(id string) (*company.Company, error)
 			&company.Phone,
 			&company.Email,
 			&company.CreatedAt,
+			&ratingId,
 			&grade,
 			&comment,
+			&ratingCreatedAt,
 		)
 		if err != nil {
 			return nil, err
 		}
 
-		if grade.Valid && comment.Valid {
+		if ratingId.Valid && grade.Valid && comment.Valid && ratingCreatedAt.Valid {
+            parsedId, err := uuid.Parse(ratingId.String)
+            if err != nil {
+                return nil, err
+            }
+
 			rating := &rating.Rating{
-				Grade:   int(grade.Int16),
-				Comment: comment.String,
+				ID:        parsedId,
+				Grade:     int(grade.Int16),
+				Comment:   comment.String,
+				CreatedAt: ratingCreatedAt.Time,
 			}
 			company.Ratings = append(company.Ratings, rating)
 		}
