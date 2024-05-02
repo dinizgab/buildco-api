@@ -12,9 +12,6 @@ func New(config config.DBConfig) (*sql.DB, error) {
 	dsn := fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=disable", config.UserName, config.Password, config.Host, config.Port, config.DBName)
 
 	db, err := sql.Open("pgx", dsn)
-	if err != nil {
-		return nil, err
-	}
 
 	err = db.Ping()
 	if err != nil {
